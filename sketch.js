@@ -3,9 +3,13 @@ let cannon;
 let counter = 0;
 let directionTrigger = true;
 let cannonX;
+let cannonY;
+let bulletY;
+
 
 function setup() {
   createCanvas(800, 650);
+  bulletY = height;
   cannonX= width/2;
   cannon = loadImage('cannon.png');
   greenAlien = loadImage('greenAlien.png');
@@ -17,21 +21,22 @@ function setup() {
 
 
 function draw() {
-  frameRate(10);
+  //frameRate(10);
   background(50, 89, 100);
   cannonMove();
-  counter += 1;
-  print(counter);
+  // counter += 1;
+  // print(counter);
   for (let i = 0; i < aliens.length; i++){
   aliens[i].move();
   aliens[i].display();
   }
+  bullet();
 }
 
 function cannonMove(){
-  cannonX = cannonX + random(-20, 20);
-  
-   image(cannon, cannonX, 600,  100, 75);
+  cannonX = cannonX + random(-5, 5);
+  cannonY = 600;
+   image(cannon, cannonX, cannonY,  100, 75);
    if(cannonX < 50){
     cannonX = cannonX + 50;
    }
@@ -39,6 +44,12 @@ function cannonMove(){
     cannonX = cannonX - 50;
    }
 }
+
+function bullet(){
+  bulletY = bulletY -1;
+  noStroke();
+  rect(cannonX + 50, bulletY, 5, 5);
+ }
 
 // Jitter class
 class Alien {
