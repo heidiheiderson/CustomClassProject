@@ -5,6 +5,7 @@ let directionTrigger = true;
 let cannonX;
 let cannonY;
 let bulletY;
+let bullet;
 
 
 function setup() {
@@ -17,6 +18,7 @@ function setup() {
     let x = 10 +100 * i;
     aliens[i] = new Alien(x, 0);
   } 
+  bullet = new Bullet();
 }
 
 
@@ -24,13 +26,11 @@ function draw() {
   //frameRate(10);
   background(50, 89, 100);
   cannonMove();
-  // counter += 1;
-  // print(counter);
   for (let i = 0; i < aliens.length; i++){
   aliens[i].move();
   aliens[i].display();
   }
-  bullet();
+  bullet.display();
 }
 
 function cannonMove(){
@@ -45,10 +45,25 @@ function cannonMove(){
    }
 }
 
-function bullet(){
-  bulletY = bulletY -1;
+
+ class Bullet{
+  constructor(tempX, tempY){
+    this.x = tempX;
+    this.y = tempY;
+    this.ySpeed = -0.5;
+    this.initialX = cannonX;
+  }
+  display(){
   noStroke();
-  rect(cannonX + 50, bulletY, 5, 5);
+  // this.y = this.y - 1;
+  bulletY = bulletY - 2;
+  translate(0, this.y);
+  rect(this.initialX + 50, bulletY - 60, 5, 5);
+
+  }
+  // move(){
+  // bulletY = bulletY -1;
+  // }
  }
 
 // Jitter class
@@ -83,6 +98,14 @@ class Alien {
     }
   }
 }
+
+//i need a function(?) that causes my bullet to shoot randomly
+//and then i need the occurance of the bullet to end at 0Y or at
+//impact of aliens
+
+//i need to place the start point of my bullet at the cannon's center as the cannon is moving. 
+//and then i need the bullet and it's movement to not be associated
+//with the cannon or it's movement
 
 
 
