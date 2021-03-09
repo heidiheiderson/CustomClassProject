@@ -1,49 +1,83 @@
 let aliens = [];
-let cannon;
+let cannonImage;
 let counter = 0;
 let directionTrigger = true;
 let cannonX;
 let cannonY;
 let bulletY;
 let bullet;
+let cannon;
 
 
 function setup() {
   createCanvas(800, 650);
   bulletY = height;
   cannonX= width/2;
-  cannon = loadImage('cannon.png');
+  cannonImage = loadImage('cannon.png');
   greenAlien = loadImage('greenAlien.png');
   for(let i =0; i < 10; i++) {
     let x = 10 +100 * i;
     aliens[i] = new Alien(x, 0);
-  } 
+  }
   bullet = new Bullet();
+  // cannon = new Cannon();
 }
 
 
 function draw() {
   //frameRate(10);
+  if (second() % 4 == 0) {
+  //bullet is triggered to fire 
+   bullet.display();
+   print(second());
+  }
   background(50, 89, 100);
   cannonMove();
+  // cannon.display();
+  // cannon.move();
   for (let i = 0; i < aliens.length; i++){
   aliens[i].move();
   aliens[i].display();
   }
-  bullet.display();
 }
 
 function cannonMove(){
   cannonX = cannonX + random(-5, 5);
   cannonY = 600;
-   image(cannon, cannonX, cannonY,  100, 75);
+   image(cannonImage, cannonX, cannonY,  100, 75);
    if(cannonX < 50){
     cannonX = cannonX + 50;
    }
    if(cannonX > 750){
     cannonX = cannonX - 50;
    }
-}
+ }
+
+
+// class Cannon{
+//   constructor(tempX, tempY){
+//     this.x = tempX;
+//     this.y = tempY;
+//     this.speed = 1;
+//     this.initialX = cannonX;
+//     this.initialY = cannonY;
+//   }
+//   move(){
+//     this.y += random(-this.speed, this.speed);
+//       if(this.y < 50){
+//     this.y = this.y + 50;
+//    }
+//    if(this.y > 750){
+//     this.y = this.y - 50;
+//    }
+//   }
+
+
+//   display(){
+//     cannonY = 600;
+//    image(cannonImage, this.initialX, this.initialY,  100, 75);
+//   }
+// }
 
 
  class Bullet{
@@ -55,15 +89,15 @@ function cannonMove(){
   }
   display(){
   noStroke();
-  // this.y = this.y - 1;
+  //this.y = this.y - 1;
   bulletY = bulletY - 2;
   translate(0, this.y);
   rect(this.initialX + 50, bulletY - 60, 5, 5);
 
   }
-  // move(){
-  // bulletY = bulletY -1;
-  // }
+  move(){
+  bulletY = bulletY -1;
+  }
  }
 
 // Jitter class
